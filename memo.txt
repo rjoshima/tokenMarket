@@ -1,0 +1,61 @@
+when transact using metamask, there is "unknown id", then try to restart chrome or firefox. 
+
+first, command truffle console
+then, you are in truffle(development)>
+this "(development)" is important
+then, migrate --reset --all
+
+truffle migrate --network ropsten
+
+truffle console --network ropsten
+
+
+deploy ropsten
+
+geth --testnet account new
+geth --testnet --fast --rpc --rpcapi eth,net,web3,personal
+geth attach http://127.0.0.1:8545
+personal.unlockAccount(eth.accounts[0])
+truffle migrate --network ropsten
+truffle migrate --reset --all --network ropsten
+
+or
+
+truffle console --network ropsten
+migrate --reset --all
+
+
+
+
+
+// getTokenContractInstance: function () {
+//     const tokenAddress = "---tokenのアドレス---";
+//     const contractABI = [---ABIの中身---]
+//     const tokenContract = web3.eth.contract(contractABI);
+//     return tokenContract.at(tokenAddress);
+// },
+
+// getGasPrice: function() {
+//   return new Promise((resolve, reject) => {
+//         web3.eth.getGasPrice((error, result) => {
+//             if (error) {
+//                 reject(error)
+//             } else {
+//                 resolve(result.toString('16'))
+//             }
+//         })
+//   })
+// },
+
+
+
+
+
+
+
+
+
+
+
+
+
