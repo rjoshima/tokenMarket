@@ -51,7 +51,7 @@
         txSuccess: false,
         txUrl: "",
         loading: false,
-        gasPrice: 2,
+        gasPrice: web3.toWei(2, "gwei"),
       }
     },
     async created () {
@@ -91,7 +91,6 @@
         } catch (err) {
 
           console.log(err.message);
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
 
           return
         }
@@ -114,7 +113,6 @@
           })
         } catch (err) {
           console.log(err.message);
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
 
           return
         }
@@ -138,7 +136,7 @@
         } catch (err) {
           this.loading = false;
           console.log(err.message);
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
+          alert(err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
 
           return
         }
@@ -162,7 +160,7 @@
         } catch (err) {
           this.loading = false;
           console.log(err.message);
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
+          alert(err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
           return
         }
       },
@@ -185,7 +183,7 @@
         } catch (err) {
           this.loading = false;
           console.log(err.message);
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
+          alert(err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
           return
         }
       },

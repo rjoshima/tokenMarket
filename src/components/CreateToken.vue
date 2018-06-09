@@ -55,7 +55,7 @@
     data() {
       return {
         labelPosition: 'right',
-        gasPrice: 2,
+        gasPrice: web3.toWei(2, "gwei"),
         formLabelAlign: {
           name: 'token name hoge',
           details: 'token details hoge',
@@ -108,7 +108,7 @@
           item.price = await this.toHalfWidth(item.price)
           
           this.loading = true;
-          return await this.instance.mint(item.name, item.details, web3.toWei(parseFloat(item.price), "ether"), item.sold, item.sort, { from: this.account, gasPrice: this.gasPrice}).then((r) => {
+          return await this.instance.mint(item.name, item.details, web3.toWei(parseFloat(item.price), "ether"), item.sold, item.sort, { from: this.account, gas:3000000, gasPrice: this.gasPrice}).then((r) => {
             console.log(r)
             console.log("success")
             this.loading = false;
