@@ -50,6 +50,7 @@
         txSuccess: false,
         txUrl: "",
         loading: false,
+        gasPrice: 2,
       }
     },
     async created () {
@@ -67,6 +68,7 @@
           console.log(this.account)
           this.instance = await CreateToken.deployed()
           await this.updatetokens()
+          await this.getGasPrice()
 
         })
       } catch (err) {
@@ -119,7 +121,7 @@
             return
           } 
           this.loading = true;
-          await this.instance.quitSoldToken(tokenId, false, { from: this.account, gas:3000000}).then(async (r) => {
+          await this.instance.quitSoldToken(tokenId, false, { from: this.account, gas:3000000, gasPrice: this.gasPrice}).then(async (r) => {
             
             this.loading = false;
             const rawTxUrl = "https://ropsten.etherscan.io/tx/" + r.tx
@@ -143,7 +145,7 @@
             return
           } 
           this.loading = true;
-          await this.instance.purchase(tokenId, { from: this.account, value: web3.toWei(tokenPrice, "wei"), gas:3000000}).then(async (r) => {
+          await this.instance.purchase(tokenId, { from: this.account, value: web3.toWei(tokenPrice, "wei"), gas:3000000, gasPrice: this.gasPrice}).then(async (r) => {
             this.loading = false;
             const rawTxUrl = "https://ropsten.etherscan.io/tx/" + r.tx
             this.txUrl = "success! check it: <a href=" + rawTxUrl + " target='_blank'}>" + rawTxUrl + "</a>"
@@ -157,7 +159,21 @@
           alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
 
         }
-      },   
+      },  
+
+      async getGasPrice() {
+        await web3.eth.getGasPrice((err, result) => {
+          if (err) {
+            console.log(err.message);
+            alert(err.message)
+          } else {        
+            this.gasPrice = result.toString(10);  
+                // this.gasPriceInGwei = result.toString(10);
+              // this.gasPriceInGwei = web3.fromWei(result.toString(10), 'gwei');                                  
+              // return gasPriceInGwei
+          }
+        })
+      }
     }
 	}
 

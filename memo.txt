@@ -17,7 +17,12 @@ geth --testnet --fast --rpc --rpcapi eth,net,web3,personal
 geth attach http://127.0.0.1:8545
 personal.unlockAccount(eth.accounts[0])
 truffle migrate --network ropsten
+or
+truffle migrate --network rinkeby
+
 truffle migrate --reset --all --network ropsten
+or
+truffle migrate --reset --all --network rinke
 
 or
 

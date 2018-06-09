@@ -51,6 +51,7 @@
         txSuccess: false,
         txUrl: "",
         loading: false,
+        gasPrice: 2,
       }
     },
     async created () {
@@ -68,6 +69,7 @@
           console.log(this.account)
           this.instance = await CreateToken.deployed()
           await this.updatetokens()
+          await this.getGasPrice()
 
         })
       } catch (err) {
@@ -125,7 +127,7 @@
             } 
           this.loading = true;
           // in defaul metamask, without setting gas to 3000000, the transacation is failed, because of not enough gas set
-          await this.instance.burn(tokenId, { from: this.account, gas:3000000 }).then(async (r) => {
+          await this.instance.burn(tokenId, { from: this.account, gas:3000000, gasPrice: this.gasPrice}).then(async (r) => {
             
             this.loading = false;
             const rawTxUrl = "https://ropsten.etherscan.io/tx/" + r.tx
@@ -148,7 +150,7 @@
               return
             } 
           this.loading = true;
-          await this.instance.quitSoldToken(tokenId, false, { from: this.account, gas:3000000}).then(async (r) => {
+          await this.instance.quitSoldToken(tokenId, false, { from: this.account, gas:3000000, gasPrice: this.gasPrice}).then(async (r) => {
             this.loading = false;
             console.log(r)
             const rawTxUrl = "https://ropsten.etherscan.io/tx/" + r.tx
@@ -171,7 +173,7 @@
               return
             } 
           this.loading = true;
-          await this.instance.quitSoldToken(tokenId, true, { from: this.account, gas:3000000}).then(async (r) => {
+          await this.instance.quitSoldToken(tokenId, true, { from: this.account, gas:3000000, gasPrice: this.gasPrice}).then(async (r) => {
             this.loading = false;
             const rawTxUrl = "https://ropsten.etherscan.io/tx/" + r.tx
             this.txUrl = "success! check it: <a href=" + rawTxUrl + " target='_blank'}>" + rawTxUrl + "</a>"
@@ -187,6 +189,19 @@
           return
         }
       },
+      async getGasPrice() {
+        await web3.eth.getGasPrice((err, result) => {
+          if (err) {
+            console.log(err.message);
+            alert(err.message)
+          } else {        
+            this.gasPrice = result.toString(10);  
+                // this.gasPriceInGwei = result.toString(10);
+              // this.gasPriceInGwei = web3.fromWei(result.toString(10), 'gwei');                                  
+              // return gasPriceInGwei
+          }
+        })
+      }
     }
   }
 </script>

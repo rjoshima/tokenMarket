@@ -55,6 +55,7 @@
     data() {
       return {
         labelPosition: 'right',
+        gasPrice: 2,
         formLabelAlign: {
           name: 'token name hoge',
           details: 'token details hoge',
@@ -82,6 +83,7 @@
           this.account = accs[0];
           console.log(this.account)
           this.instance = await CreateToken.deployed()
+          await this.getGasPrice()
 
         })
       } catch (err) {
@@ -106,7 +108,7 @@
           item.price = await this.toHalfWidth(item.price)
           
           this.loading = true;
-          return await this.instance.mint(item.name, item.details, web3.toWei(parseFloat(item.price), "ether"), item.sold, item.sort, { from: this.account}).then((r) => {
+          return await this.instance.mint(item.name, item.details, web3.toWei(parseFloat(item.price), "ether"), item.sold, item.sort, { from: this.account, gasPrice: this.gasPrice}).then((r) => {
             console.log(r)
             console.log("success")
             this.loading = false;
@@ -124,7 +126,7 @@
           // alert("Error: " + err.message)       
           // Temporary comment 
           // this.formLabelAlign.ropsten = true
-          alert("Error: " + err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
+          alert(err.message + " or Use ropsten net( You can't use this function), check it https://qiita.com/tmikada/items/cdc5a3871f655cb7b67d  ")
           return
         }
       },
@@ -133,12 +135,23 @@
         return value.replace(/[！-～]/g, (s) => {
           return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
         });
-      }
-      
+      },
 
-
+      async getGasPrice() {
+        await web3.eth.getGasPrice((err, result) => {
+          if (err) {
+            console.log(err.message);
+            alert(err.message)
+          } else {        
+            this.gasPrice = result.toString(10);  
+                // this.gasPriceInGwei = result.toString(10);
+              // this.gasPriceInGwei = web3.fromWei(result.toString(10), 'gwei');                                  
+              // return gasPriceInGwei
+          }
+        })
+     }
     }
-    
+
   }
  
 </script>
