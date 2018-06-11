@@ -3,13 +3,15 @@
     <p>Hi, everyone!</p>
     <p>To use this site, Please use ropsten test net with metamask.</p>
     <p>By this DApps, you can buy and sell ERC721 tokens anything. First, try to create your ERC721 token, and then click create token tab. The Transcation time is about 30 seconds.</p>
-    <p>Adding first minted address on the card, the card can show unique information to the user. Also, if you want to delete your token, then click burn button in your MY TOKEN COLLECTION.</p> 
+    <p>Adding first minted address on the card, the card can show unique information to the user. Also, if you want to delete your token, then click burn button in your My Token Collection tab.</p> 
+    <p>If you want to know How to use this Dapps, then click Tutotail tab or this video <a href="https://youtu.be/_IyErYJBKFc" target="_blank">https://youtu.be/_IyErYJBKFc</a></p>
     <p>Next I will add rental and auction functions. Please look forward to it!</p>
     <div class="center">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="CREATE TOKEN" name="first"></el-tab-pane>
         <el-tab-pane label="TOKEN MARKET" name="second"></el-tab-pane>
         <el-tab-pane label="MY TOKEN COLLECTION" name="third"></el-tab-pane>
+        <el-tab-pane label="TUTORIAL" name="fourth"></el-tab-pane>
       </el-tabs>
     </div>
     <router-view>
@@ -39,6 +41,9 @@
         }
         if (tab.name === "third") {
           this.$router.push('/MyCollection')
+        }
+        if (tab.name === "fourth") {
+          this.$router.push('/Tutorial')
         }
       }
     }

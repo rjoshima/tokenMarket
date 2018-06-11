@@ -118,7 +118,7 @@ contract createToken is ERC721 {
         address newOwner = msg.sender;
         require(oldOwner != newOwner);
         require(tokens[_tokenId].price <= msg.value);
-        require(tokens[_tokenId].sale <= true);
+        require(tokens[_tokenId].sale == true);
         
         Token memory token = tokens[_tokenId];
         uint256 price = token.price;
@@ -248,13 +248,12 @@ contract createToken is ERC721 {
 
     }
      
-    function quitSoldToken(uint256 _tokenId, bool sale) external {
+    function quitSoldToken(uint256 _tokenId, bool sale) external onlyOwnerOf(_tokenId) {
         tokens[_tokenId].sale = sale; 
       
     }
 
-    function soldToken(uint256 _tokenId, bool sale) external  {
-        
+    function soldToken(uint256 _tokenId, bool sale) external onlyOwnerOf(_tokenId) {      
         tokens[_tokenId].sale = sale;       
 
     }
